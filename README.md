@@ -1,6 +1,9 @@
 # TaskManager
 
-A demo task management app built with CodeIgniter 4. Work in progress.
+A demo task management app built with CodeIgniter 4.
+
+> [!CAUTION]
+> Work in progress.
 
 ## Setup
 
@@ -8,6 +11,7 @@ A demo task management app built with CodeIgniter 4. Work in progress.
 composer install
 cp env .env
 php spark migrate
+php spark db:seed AdminSeeder
 php spark serve
 ```
 
