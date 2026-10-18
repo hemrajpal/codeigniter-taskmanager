@@ -1,0 +1,104 @@
+
+html { scroll-behavior: smooth; }
+
+.home-page {
+    --accent: #059669;
+    --accent-dark: #047857;
+    --ink: #0f172a;
+    --muted: #64748b;
+    --line: #e5e7eb;
+    color: var(--ink);
+}
+
+.home-page section[id] { scroll-margin-top: 20px; }
+
+/* Navbar */
+.home-page .brand {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink);
+    text-decoration: none;
+}
+.home-page .brand span { color: var(--accent); }
+.home-page .nav-link { color: var(--muted); }
+.home-page .nav-link:hover { color: var(--ink); }
+
+/* Buttons (scoped so other pages are unaffected) */
+.home-page .btn { border-radius: 6px; font-weight: 600; }
+.home-page .btn-accent {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: var(--accent);
+    --bs-btn-border-color: var(--accent);
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: var(--accent-dark);
+    --bs-btn-hover-border-color: var(--accent-dark);
+    --bs-btn-active-bg: var(--accent-dark);
+    --bs-btn-active-border-color: var(--accent-dark);
+}
+.home-page .btn-line {
+    --bs-btn-color: var(--ink);
+    --bs-btn-border-color: var(--line);
+    --bs-btn-hover-color: var(--ink);
+    --bs-btn-hover-bg: #f8fafc;
+    --bs-btn-hover-border-color: var(--muted);
+    --bs-btn-active-bg: #f1f5f9;
+    --bs-btn-active-border-color: var(--muted);
+}
+
+/* Hero */
+.home-page .hero { padding: 90px 0 80px; }
+.home-page .eyebrow {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--accent);
+}
+.home-page .hero h1 {
+    font-size: clamp(36px, 6vw, 60px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    max-width: 720px;
+}
+.home-page .hero-text {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.7;
+    max-width: 560px;
+}
+
+/* Features */
+.home-page .features { border-top: 1px solid var(--line); padding: 70px 0; }
+.home-page .feature { border-top: 2px solid var(--ink); padding-top: 16px; height: 100%; }
+.home-page .feature-number {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+}
+.home-page .feature p { color: var(--muted); line-height: 1.7; margin-bottom: 0; }
+
+/* Call to action */
+.home-page .cta {
+    background: var(--ink);
+    color: #fff;
+    padding: 56px 0;
+}
+.home-page .cta p { color: #94a3b8; }
+
+/* Footer */
+.home-page .site-footer { color: var(--muted); font-size: 14px; }
+.home-page .site-footer a { color: var(--muted); text-decoration: none; }
+.home-page .site-footer a:hover { color: var(--ink); }
+
+@media (max-width: 767px) {
+    .home-page .hero { padding: 56px 0 48px; }
+    .home-page .features { padding: 48px 0; }
+    .home-page .hero-text { font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+}
+
