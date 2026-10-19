@@ -23,10 +23,6 @@ class CreateTasksTable extends Migration
                 'type' => 'TEXT',
                 'null' => true,
             ],
-            'assigned_to' => [
-                'type'     => 'INT',
-                'unsigned' => true,
-            ],
             'created_by' => [
                 'type'     => 'INT',
                 'unsigned' => true,

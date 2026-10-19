@@ -8,6 +8,7 @@ $nav = [];
 if ($role === 'admin') {
     $nav[] = ['Admin Dashboard', 'admin/dashboard'];
     // $nav[] = ['Users', 'admin/users'];
+    $nav[] = ['Manage Tasks', 'admin/tasks'];
 }
 
 // Everyone, admins included

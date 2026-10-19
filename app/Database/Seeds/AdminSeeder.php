@@ -29,7 +29,7 @@ class AdminSeeder extends Seeder
                 PASSWORD_DEFAULT
             ),
             'role'       => 'admin',
-            'status'     => 'approved',
+            'status'     => 'active',
             'email_verified_at' => date('Y-m-d H:i:s'),
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),

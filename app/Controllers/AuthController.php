@@ -9,6 +9,8 @@ use App\Models\UserModel;
 
 class AuthController extends BaseController
 {
+    private UserModel $userModel;
+    
     public function __construct(){
         $this->userModel = model(UserModel::class);
     }
