@@ -1,8 +1,5 @@
 # TaskManager
 
-> [!CAUTION]
-> Work in progress.
-
 A task management application built with **CodeIgniter 4, PHP, and MySQL**. It provides separate admin and member areas for managing tasks, assigning work, and tracking task progress.
 
 > **Status:** Work in progress.
