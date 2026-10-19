@@ -31,6 +31,11 @@ class TaskRepository
         }
     }
 
+    public function getPager()
+    {
+        return $this->tasks->pager;
+    }
+
     // Every task (admin view)
     public function listAll(?string $status = null): array
     {
@@ -40,7 +45,7 @@ class TaskRepository
             $query->where('tasks.status', $status);
         }
 
-        return $query->orderBy('tasks.due_date', 'ASC')->findAll();
+        return $query->orderBy('tasks.due_date', 'ASC')->paginate(10);
     }
 
     // Only the tasks assigned to this user (member view).
@@ -52,7 +57,7 @@ class TaskRepository
             $query->where('tasks.status', $status);
         }
 
-        return $query->orderBy('tasks.due_date', 'ASC')->findAll();
+        return $query->orderBy('tasks.due_date', 'ASC')->paginate(10);
     }
 
     public function find(int $id): ?object
@@ -101,5 +106,75 @@ class TaskRepository
     public function delete(int $id): bool
     {
         return (bool) $this->tasks->delete($id);
+    }
+
+    public function updateAssignedStatus( int $taskId, int $userId, string $status ): bool 
+    {
+        $task = $this->tasks
+            ->where('id', $taskId)
+            ->join('task_assignments ta', 'ta.task_id = tasks.id')
+            ->where('ta.user_id', $userId)
+            ->first();
+
+        if (! $task) {
+            return false;
+        }
+
+        if ($task->status === $status) {
+            return true;
+        }
+
+        return $this->tasks->update($taskId, ['status' => $status]);
+    }
+
+    public function getMemberStats(int $userId): array
+    {
+        $row = $this->tasks
+            ->select("
+                COUNT(DISTINCT tasks.id) AS total,
+                COUNT(DISTINCT CASE WHEN tasks.status = 'pending' THEN tasks.id END) AS pending,
+                COUNT(DISTINCT CASE WHEN tasks.status = 'in_progress' THEN tasks.id END) AS in_progress,
+                COUNT(DISTINCT CASE WHEN tasks.status = 'completed' THEN tasks.id END) AS completed
+            ")
+            ->join('task_assignments ta', 'ta.task_id = tasks.id')
+            ->where('ta.user_id', $userId)
+            ->get()
+            ->getRowArray();
+
+        return $row ?? [
+            'total' => 0,
+            'pending' => 0,
+            'in_progress' => 0,
+            'completed' => 0,
+        ];
+    }
+
+    public function getTaskStats(): array
+    {
+        return $this->tasks
+            ->select("
+                COUNT(*) AS total,
+                SUM(status = 'pending') AS pending,
+                SUM(status = 'in_progress') AS in_progress,
+                SUM(status = 'completed') AS completed,
+                SUM(
+                    due_date < CURDATE()
+                    AND status != 'completed'
+                ) AS overdue
+            ")
+            ->get()
+            ->getRowArray();
+    }
+
+    public function getUpcomingTasks(int $userId): array
+    {
+        return $this->tasks
+            ->select('tasks.*')
+            ->join('task_assignments ta', 'ta.task_id = tasks.id')
+            ->where('ta.user_id', $userId)
+            ->where('tasks.due_date >=', date('Y-m-d'))
+            ->where('tasks.status !=', 'completed')
+            ->orderBy('tasks.due_date', 'ASC')
+            ->findAll(5);
     }
 }

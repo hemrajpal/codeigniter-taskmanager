@@ -61,14 +61,38 @@ $today = date('Y-m-d');
                             <?= $overdue ? '<small>(overdue)</small>' : '' ?>
                         </td>
                         <td>
-                            <span class="badge text-bg-<?= $badge[$task->status] ?? 'secondary' ?>">
-                                <?= esc($label($task->status)) ?>
-                            </span>
+                            <form
+                                action="<?= site_url('member/tasks/' . $task->id . '/status') ?>"
+                                method="post"
+                                class="d-flex align-items-center gap-2"
+                            >
+                                <?= csrf_field() ?>
+
+                                <select
+                                    name="status"
+                                    class="form-select form-select-sm"
+                                    aria-label="Task status"
+                                >
+                                    <?php foreach ($statuses as $status): ?>
+                                        <option
+                                            value="<?= esc($status) ?>"
+                                            <?= $task->status === $status ? 'selected' : '' ?>
+                                        >
+                                            <?= esc($label($status)) ?>
+                                        </option>
+                                    <?php endforeach ?>
+                                </select>
+
+                                <button type="submit" class="btn btn-sm btn-primary">
+                                    Update
+                                </button>
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach ?>
             </tbody>
         </table>
+        <?= $this->include('partials/pagination') ?>
     </div>
 </div>
 

@@ -49,9 +49,10 @@ class TaskModel extends Model
     public function assignedTo(int $userId): static
     {
         return $this->whereIn('tasks.id', static fn (BaseBuilder $b) => $b
-            ->select('task_id')
-            ->from('task_assignments')
-            ->where('user_id', $userId));
+                ->select('task_id')
+                ->from('task_assignments')
+                ->where('user_id', $userId)
+            );
     }
 
     /** Adds assignee_names (comma-separated) to each task row. */

@@ -27,6 +27,7 @@ class AdminTaskController extends BaseController
             'tasks'    => $this->tasks->listAll($status),
             'statuses' => self::STATUSES,
             'current'  => $status,
+            'pager'    => $this->tasks->getPager(),
         ]);
     }
 
@@ -37,10 +38,6 @@ class AdminTaskController extends BaseController
 
     public function store(): RedirectResponse
     {
-        if (! $this->assigneesValid()) {
-            return $this->backWithErrors($this->validator->getErrors());
-        }
-
         $data = $this->postedData();
         $data['created_by'] = (int) session()->get('user_id');
 
@@ -64,10 +61,6 @@ class AdminTaskController extends BaseController
     {
         if ($this->tasks->find($id) === null) {
             return $this->notFound();
-        }
-
-        if (! $this->assigneesValid()) {
-            return $this->backWithErrors($this->validator->getErrors());
         }
 
         $ok = $this->tasks->update($id, $this->postedData(), (array) $this->request->getPost('assignees'));
@@ -98,11 +91,6 @@ class AdminTaskController extends BaseController
         $data['due_date'] = ($data['due_date'] ?? '') !== '' ? $data['due_date'] : null;
 
         return $data;
-    }
-
-    private function assigneesValid(): bool
-    {
-        return $this->validate(['assignees.*' => 'permit_empty|is_natural_no_zero|is_not_unique[users.id]']);
     }
 
     private function formData(?object $task): array

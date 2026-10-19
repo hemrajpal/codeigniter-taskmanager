@@ -15,6 +15,17 @@ class MemberTaskController extends BaseController
         $this->tasks = new TaskRepository();
     }
 
+    public function dashboard()
+    {
+        $userId = (int) session()->get('user_id');
+
+        return view('member/dashboard', [
+            'userName' => session()->get('user_name'),
+            'stats'    => $this->tasks->getMemberStats($userId),
+            'upcomingTasks' => $this->tasks->getUpcomingTasks($userId, 5),
+        ]);
+    }
+
     public function index(): string
     {
         $status = $this->request->getGet('status');
@@ -24,6 +35,28 @@ class MemberTaskController extends BaseController
             'tasks'    => $this->tasks->listAssignedTo((int) session()->get('user_id'), $status),
             'statuses' => self::STATUSES,
             'current'  => $status,
+            'pager'    => $this->tasks->getPager(),
         ]);
+    }
+
+    public function updateStatus(int $taskId)
+    {
+        $userId = (int) session()->get('user_id');
+        $status = $this->request->getPost('status');
+
+        if (! in_array($status, self::STATUSES, true)) {
+            return redirect()->back()
+                ->with('error', 'Invalid task status.');
+        }
+
+        $updated = $this->tasks->updateAssignedStatus($taskId, $userId, $status);
+
+        if (!$updated) {
+            return redirect()->back()
+                ->with('error', 'Task not found or not assigned to you.');
+        }
+
+        return redirect()->back()
+            ->with('success', 'Task status updated successfully.');
     }
 }

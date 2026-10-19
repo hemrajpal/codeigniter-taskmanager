@@ -82,6 +82,7 @@ $today = date('Y-m-d');
                 <?php endforeach ?>
             </tbody>
         </table>
+        <?= $this->include('partials/pagination') ?>
     </div>
 </div>
 

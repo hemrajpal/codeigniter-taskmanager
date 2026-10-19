@@ -6,6 +6,10 @@
 
 <?= $this->endSection() ?>
 
+<?= $this->section('title') ?>
+Home
+<?= $this->endSection() ?>
+
 
 <?= $this->section('content') ?>
 

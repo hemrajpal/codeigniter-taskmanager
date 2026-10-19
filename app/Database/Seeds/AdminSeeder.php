@@ -25,7 +25,7 @@ class AdminSeeder extends Seeder
             'name'       => 'Administrator',
             'email'      => $email,
             'password'   => password_hash(
-                '123456',
+                '12345678',
                 PASSWORD_DEFAULT
             ),
             'role'       => 'admin',

@@ -26,8 +26,9 @@ $routes->group('admin', ['filter' => ['auth', 'admin']], static function ($route
 });
 
 $routes->group('member', ['filter' => 'auth'], static function ($routes) {
-    $routes->get('dashboard', 'MemberController::dashboard', ['as' => 'member.dashboard']);
+    $routes->get('dashboard', 'MemberTaskController::dashboard', ['as' => 'member.dashboard']);
     $routes->get('tasks', 'MemberTaskController::index', ['as' => 'member.tasks']);
+    $routes->post('tasks/(:num)/status', 'MemberTaskController::updateStatus/$1', ['filter' => 'auth']);
 });
 
 $routes->post('logout', 'AuthController::logout', ['filter' => 'auth', 'as' => 'logout']);
