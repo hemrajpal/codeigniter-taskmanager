@@ -2,8 +2,25 @@
 
 A task management application built with **CodeIgniter 4, PHP, and MySQL**. It has separate admin and member areas for managing users, creating and assigning tasks, and tracking progress.
 
-> [!CAUTION]
-> Work in progress.
+## Screenshots
+
+Add your actual application screenshots to the `screenshots/` directory.
+
+### Login
+
+![Manage Users](screenshots/login.png)
+
+### Registration
+
+![Member Tasks](screenshots/signup.png)
+
+### Admin Dashboard
+
+![Admin Dashboard](screenshots/admin-dashboard.png)
+
+### Manage Tasks
+
+![Manage Tasks](screenshots/manage-task.png)
 
 ## Features
 
