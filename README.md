@@ -1,151 +1,70 @@
 # TaskManager
 
-A task management application built with **CodeIgniter 4, PHP, and MySQL**. It provides separate admin and member areas for managing tasks, assigning work, and tracking task progress.
+A task management application built with **CodeIgniter 4, PHP, and MySQL**. It has separate admin and member areas for managing users, creating and assigning tasks, and tracking progress.
 
-> **Status:** Work in progress.
+> [!CAUTION]
+> Work in progress.
 
 ## Features
 
-### Authentication and Security
-- User registration and login
-- Secure password hashing
-- Session-based authentication
-- Custom CAPTCHA to help prevent automated form submissions
-- Honeypot protection on login and signup forms
-- Input validation and role-based access filters
-- Login and logout functionality
-- Email verification workflow is partially implemented and requires completion
+### Authentication and security
+- Registration, login, and logout
+- Password hashing and session-based authentication with session ID regeneration
+- Role-based access control (Admin and Member) using route filters
+- Only active accounts can sign in
+- Custom CAPTCHA and honeypot protection on login and signup
+- Input validation
+- Email verification groundwork (token table, mailer, verification link), currently disabled
 
-### Admin Dashboard
-- Dashboard with user and task statistics
-- Create, edit, and delete tasks
-- Assign tasks to multiple members
-- View task assignees
-- Filter tasks by status
-- Paginated task lists
+### Admin
+- Dashboard with user statistics and task statistics (total, pending, in progress, completed, overdue)
+- **User management:** search, paginated list, edit, change status, delete
+- **Task management:** create, edit, and delete tasks
+- Assign a task to multiple members
+- Search and filter tasks by status, with paginated lists
 
-### Member Dashboard
-- View assigned task statistics
-- View upcoming tasks
-- View tasks assigned to the logged-in member
-- Filter tasks by status
-- Update assigned task status
+### Member
+- Dashboard with statistics for assigned tasks and upcoming due dates
+- View tasks assigned to you, with search, status filter, and pagination
+- Update the status of your assigned tasks
 
-### Task Management
-- Task title and description
-- Due dates
-- Task statuses:
-  - Pending
-  - In Progress
-  - Completed
-- Overdue task statistics
-- Database transactions for task creation and assignment updates
+### Tasks
+- Title, description, and due date
+- Statuses: Pending, In Progress, Completed
+- Overdue tracking
+- Database transactions when saving a task and its assignees
 
-## Tech Stack
+## Tech stack
 
-- **Backend:** PHP 8.2+, CodeIgniter 4
-- **Database:** MySQL
-- **Frontend:** HTML, CSS, Bootstrap 5
-- **Architecture:** MVC with a repository layer for task operations
-- **Authentication:** Sessions and custom filters
-- **Validation:** CodeIgniter validation rules
+PHP 8.2+, CodeIgniter 4, MySQL, Bootstrap 5. Structured as MVC with a repository layer for task operations.
 
-## Requirements
+## Setup
 
-Before installing, ensure you have:
-
-- PHP 8.2 or later
-- Composer
-- MySQL or MariaDB
-- Apache, XAMPP, or another compatible PHP development environment
-
-## Installation
-
-### 1. Clone the repository
+Requires PHP 8.2+, Composer, and MySQL or MariaDB.
 
 ```bash
 git clone https://github.com/hemrajpal/codeignitor-taskmanager.git
 cd codeignitor-taskmanager
-```
-
-### 2. Install dependencies
-
-```bash
 composer install
+cp env .env        # Windows: copy env .env
 ```
 
-### 3. Configure the environment
-
-Copy the environment file.
-
-**Windows:**
-```bat
-copy env .env
-```
-
-**Linux/macOS:**
-```bash
-cp env .env
-```
-
-Open `.env` and configure your database settings, including the database name, username, and password. Configure email settings if you are testing the email-verification workflow.
-
-### 4. Create the database
-
-Create a MySQL database for the application, then update `.env` with the matching database configuration.
-
-### 5. Run migrations
+Set your database details in `.env` and create the database, then run:
 
 ```bash
 php spark migrate
-```
-
-### 6. Create the admin account
-
-```bash
 php spark db:seed AdminSeeder
-```
-
-The current seeder creates these default credentials:
-
-- **Email:** `admin@example.com`
-- **Password:** `12345678`
-
-Change the default password and remove or secure the development seeder before deploying the application publicly.
-
-### 7. Start the application
-
-```bash
 php spark serve
 ```
 
-Open [http://localhost:8080](http://localhost:8080) in your browser.
+Open `http://localhost:8080`.
 
-## Project Structure
-
-```text
-app/
-├── Controllers/    # Authentication, admin and member controllers
-├── Filters/        # Authentication, admin, guest and CAPTCHA filters
-├── Models/         # User, task and assignment models
-├── Repositories/   # Task-related database operations
-├── Libraries/      # Custom CAPTCHA and supporting services
-├── Database/
-│   ├── Migrations/ # Database schema
-│   └── Seeds/      # Initial admin account
-└── Views/          # Authentication, dashboard and task pages
-```
-
-## Current Limitations
-
-- Email verification and its email-sending workflow need to be fully enabled.
-- Admin approval and account-status handling need further implementation.
-- Review dashboard user-status statistics to ensure they match the application's current status values.
+The seeder creates an admin account: `admin@example.com` / `12345678`. Change this password before deploying.
 
 ## Author
 
-**Hemraj Pal**
+**Hemraj Pal**: [github.com/hemrajpal](https://github.com/hemrajpal)
 
-- GitHub: [github.com/hemrajpal](https://github.com/hemrajpal)
-- Project: [CodeIgniter TaskManager](https://github.com/hemrajpal/codeignitor-taskmanager)
+## License
 
+MIT
