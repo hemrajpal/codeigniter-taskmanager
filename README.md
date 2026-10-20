@@ -4,8 +4,6 @@ A task management application built with **CodeIgniter 4, PHP, and MySQL**. It h
 
 ## Screenshots
 
-Add your actual application screenshots to the `screenshots/` directory.
-
 ### Login
 
 ![Manage Users](screenshots/login.png)
