@@ -4,14 +4,6 @@ A task management application built with **CodeIgniter 4, PHP, and MySQL**. It h
 
 ## Screenshots
 
-### Login
-
-![Manage Users](screenshots/login.png)
-
-### Registration
-
-![Member Tasks](screenshots/signup.png)
-
 ### Admin Dashboard
 
 ![Admin Dashboard](screenshots/admin-dashboard.png)
