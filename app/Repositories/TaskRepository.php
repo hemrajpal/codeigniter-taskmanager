@@ -37,7 +37,7 @@ class TaskRepository
     }
 
     // Every task (admin view)
-    public function listAll(?string $status = null): array
+    public function listAll(?string $status = null, ?string $search = null, int $perPage = 10): array
     {
         $query = $this->tasks->withAssignees();
 
@@ -45,11 +45,18 @@ class TaskRepository
             $query->where('tasks.status', $status);
         }
 
-        return $query->orderBy('tasks.due_date', 'ASC')->paginate(10);
+        if ($search !== null) {
+            $query->groupStart()
+                    ->like('tasks.title', $search)
+                    ->orLike('tasks.description', $search)
+                    ->groupEnd();
+        }
+
+        return $query->orderBy('tasks.due_date', 'ASC')->paginate($perPage);
     }
 
     // Only the tasks assigned to this user (member view).
-    public function listAssignedTo(int $userId, ?string $status = null): array
+    public function listAssignedTo(int $userId, ?string $status = null, ?string $search = null, int $perPage = 10): array
     {
         $query = $this->tasks->assignedTo($userId)->withAssignees();
 
@@ -57,7 +64,15 @@ class TaskRepository
             $query->where('tasks.status', $status);
         }
 
-        return $query->orderBy('tasks.due_date', 'ASC')->paginate(10);
+        if ($search !== null) {
+            $query->groupStart()
+                    ->like('tasks.title', $search)
+                    ->orLike('tasks.description', $search)
+                    ->groupEnd();
+        }
+
+
+        return $query->orderBy('tasks.id', 'DESC')->paginate($perPage);
     }
 
     public function find(int $id): ?object

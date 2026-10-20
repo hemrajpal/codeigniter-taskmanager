@@ -21,19 +21,22 @@ class AdminTaskController extends BaseController
     public function index(): string
     {
         $status = $this->request->getGet('status');
+        $search = $this->request->getGet('search');
+        
         $status = in_array($status, self::STATUSES, true) ? $status : null;
 
-        return view('admin/tasks/index', [
-            'tasks'    => $this->tasks->listAll($status),
+        return view('admin/task/index', [
+            'tasks'    => $this->tasks->listAll($status, $search !== '' ? $search : null),
             'statuses' => self::STATUSES,
             'current'  => $status,
             'pager'    => $this->tasks->getPager(),
+            'search'   => $search,
         ]);
     }
 
     public function create(): string
     {
-        return view('admin/tasks/form', $this->formData(null));
+        return view('admin/task/form', $this->formData(null));
     }
 
     public function store(): RedirectResponse
@@ -54,7 +57,7 @@ class AdminTaskController extends BaseController
     {
         $task = $this->tasks->find($id);
 
-        return $task === null ? $this->notFound() : view('admin/tasks/form', $this->formData($task));
+        return $task === null ? $this->notFound() : view('admin/task/form', $this->formData($task));
     }
 
     public function update(int $id): RedirectResponse

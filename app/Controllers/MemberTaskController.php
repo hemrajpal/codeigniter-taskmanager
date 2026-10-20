@@ -29,13 +29,15 @@ class MemberTaskController extends BaseController
     public function index(): string
     {
         $status = $this->request->getGet('status');
+        $search = $this->request->getGet('search');
         $status = in_array($status, self::STATUSES, true) ? $status : null;
 
-        return view('member/tasks/index', [
-            'tasks'    => $this->tasks->listAssignedTo((int) session()->get('user_id'), $status),
+        return view('member/task/index', [
+            'tasks'    => $this->tasks->listAssignedTo((int) session()->get('user_id'), $status, $search !== '' ? $search : null),
             'statuses' => self::STATUSES,
             'current'  => $status,
             'pager'    => $this->tasks->getPager(),
+            'search'   => $search,
         ]);
     }
 

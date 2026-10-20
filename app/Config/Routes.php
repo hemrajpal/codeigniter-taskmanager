@@ -16,6 +16,11 @@ $routes->get('verify-email/(:segment)', 'AuthController::verifyEmail/$1', ['as' 
 
 $routes->group('admin', ['filter' => ['auth', 'admin']], static function ($routes) {
     $routes->get('dashboard', 'AdminController::dashboard', ['as' => 'admin.dashboard']);
+    $routes->get('users', 'AdminUserController::users', ['as' => 'admin.users']);
+    $routes->get('users/(:num)/edit', 'AdminUserController::editUser/$1');
+    $routes->post('users/(:num)/update', 'AdminUserController::updateUser/$1');
+    $routes->post('users/(:num)/status', 'AdminUserController::updateUserStatus/$1');
+    $routes->post('users/(:num)/delete', 'AdminUserController::deleteUser/$1');
 
     $routes->get('tasks', 'AdminTaskController::index', ['as' => 'admin.tasks']);
     $routes->get('tasks/create', 'AdminTaskController::create');
