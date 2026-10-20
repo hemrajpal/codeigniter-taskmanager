@@ -31,7 +31,6 @@ Add your actual application screenshots to the `screenshots/` directory.
 - Only active accounts can sign in
 - Custom CAPTCHA and honeypot protection on login and signup
 - Input validation
-- Email verification groundwork (token table, mailer, verification link), currently disabled
 
 ### Admin
 - Dashboard with user statistics and task statistics (total, pending, in progress, completed, overdue)
